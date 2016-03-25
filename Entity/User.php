@@ -121,7 +121,7 @@ class User extends FOSUser
     protected $updatedtime;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserOAuth", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="OAuth", mappedBy="user")
      */
     protected $oauths;
 
@@ -383,11 +383,11 @@ class User extends FOSUser
     /**
      * Add oauth
      *
-     * @param \Glory\Bundle\UserBundle\Entity\UserOAuth $oauth
+     * @param \Glory\Bundle\UserBundle\Entity\OAuth $oauth
      *
      * @return User
      */
-    public function addOauth(\Glory\Bundle\UserBundle\Entity\UserOAuth $oauth)
+    public function addOauth(\Glory\Bundle\UserBundle\Entity\OAuth $oauth)
     {
         $this->oauths[] = $oauth;
 
@@ -397,9 +397,9 @@ class User extends FOSUser
     /**
      * Remove oauth
      *
-     * @param \Glory\Bundle\UserBundle\Entity\UserOAuth $oauth
+     * @param \Glory\Bundle\UserBundle\Entity\OAuth $oauth
      */
-    public function removeOauth(\Glory\Bundle\UserBundle\Entity\UserOAuth $oauth)
+    public function removeOauth(\Glory\Bundle\UserBundle\Entity\OAuth $oauth)
     {
         $this->oauths->removeElement($oauth);
     }
