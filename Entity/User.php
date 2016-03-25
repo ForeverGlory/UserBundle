@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping\AttributeOverride;
 use FOS\UserBundle\Model\User as FOSUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Glory\Bundle\UserBundle\Entity\Group;
+use Glory\Bundle\UserBundle\Entity\OAuth;
 
 /**
  * User
@@ -55,14 +56,14 @@ class User extends FOSUser
      *
      * @ORM\Column(name="payPassword", type="string", length=64, nullable=true)
      */
-    protected $paypassword;
+    protected $payPassword;
 
     /**
      * @var string
      *
      * @ORM\Column(name="payPasswordSalt", type="string", length=64, nullable=true)
      */
-    protected $paypasswordsalt;
+    protected $payPasswordsalt;
 
     /**
      * @var string
@@ -83,42 +84,42 @@ class User extends FOSUser
      *
      * @ORM\Column(name="loginTime", type="integer", nullable=true)
      */
-    protected $logintime;
+    protected $loginTime;
 
     /**
      * @var string
      *
      * @ORM\Column(name="loginIp", type="string", length=64, nullable=true)
      */
-    protected $loginip;
+    protected $loginIp;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="createdTime", type="integer", nullable=true)
      */
-    protected $createdtime;
+    protected $createdTime;
 
     /**
      * @var string
      *
      * @ORM\Column(name="createdIp", type="string", length=64, nullable=true)
      */
-    protected $createdip;
+    protected $createdIp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="createdSource", type="string", length=64, nullable=true)
      */
-    protected $createdsource;
+    protected $createdSource;
 
     /**
      * @var string
      *
      * @ORM\Column(name="updatedTime", type="integer", nullable=true)
      */
-    protected $updatedtime;
+    protected $updatedTime;
 
     /**
      * @ORM\OneToMany(targetEntity="OAuth", mappedBy="user")
@@ -141,51 +142,51 @@ class User extends FOSUser
     }
 
     /**
-     * Set paypassword
+     * Set payPassword
      *
-     * @param string $paypassword
+     * @param string $payPassword
      *
      * @return User
      */
-    public function setPaypassword($paypassword)
+    public function setPayPassword($payPassword)
     {
-        $this->paypassword = $paypassword;
+        $this->payPassword = $payPassword;
 
         return $this;
     }
 
     /**
-     * Get paypassword
+     * Get payPassword
      *
      * @return string
      */
-    public function getPaypassword()
+    public function getPayPassword()
     {
-        return $this->paypassword;
+        return $this->payPassword;
     }
 
     /**
-     * Set paypasswordsalt
+     * Set payPasswordsalt
      *
-     * @param string $paypasswordsalt
+     * @param string $payPasswordsalt
      *
      * @return User
      */
-    public function setPaypasswordsalt($paypasswordsalt)
+    public function setPayPasswordsalt($payPasswordsalt)
     {
-        $this->paypasswordsalt = $paypasswordsalt;
+        $this->payPasswordsalt = $payPasswordsalt;
 
         return $this;
     }
 
     /**
-     * Get paypasswordsalt
+     * Get payPasswordsalt
      *
      * @return string
      */
-    public function getPaypasswordsalt()
+    public function getPayPasswordsalt()
     {
-        return $this->paypasswordsalt;
+        return $this->payPasswordsalt;
     }
 
     /**
@@ -237,147 +238,147 @@ class User extends FOSUser
     }
 
     /**
-     * Set logintime
+     * Set loginTime
      *
-     * @param integer $logintime
+     * @param integer $loginTime
      *
      * @return User
      */
-    public function setLogintime($logintime)
+    public function setLoginTime($loginTime)
     {
-        $this->logintime = $logintime;
+        $this->loginTime = $loginTime;
 
         return $this;
     }
 
     /**
-     * Get logintime
+     * Get loginTime
      *
      * @return integer
      */
-    public function getLogintime()
+    public function getLoginTime()
     {
-        return $this->logintime;
+        return $this->loginTime;
     }
 
     /**
-     * Set loginip
+     * Set loginIp
      *
-     * @param string $loginip
+     * @param string $loginIp
      *
      * @return User
      */
-    public function setLoginip($loginip)
+    public function setLoginIp($loginIp)
     {
-        $this->loginip = $loginip;
+        $this->loginIp = $loginIp;
 
         return $this;
     }
 
     /**
-     * Get loginip
+     * Get loginIp
      *
      * @return string
      */
-    public function getLoginip()
+    public function getLoginIp()
     {
-        return $this->loginip;
+        return $this->loginIp;
     }
 
     /**
-     * Set createdip
+     * Set createdTime
      *
-     * @param string $createdip
+     * @param integer $createdTime
      *
      * @return User
      */
-    public function setCreatedip($createdip)
+    public function setCreatedTime($createdTime)
     {
-        $this->createdip = $createdip;
+        $this->createdTime = $createdTime;
 
         return $this;
     }
 
     /**
-     * Get createdip
-     *
-     * @return string
-     */
-    public function getCreatedip()
-    {
-        return $this->createdip;
-    }
-
-    /**
-     * Set createdtime
-     *
-     * @param integer $createdtime
-     *
-     * @return User
-     */
-    public function setCreatedtime($createdtime)
-    {
-        $this->createdtime = $createdtime;
-
-        return $this;
-    }
-
-    /**
-     * Get createdtime
+     * Get createdTime
      *
      * @return integer
      */
-    public function getCreatedtime()
+    public function getCreatedTime()
     {
-        return $this->createdtime;
+        return $this->createdTime;
     }
 
     /**
-     * Set createdsource
+     * Set createdIp
      *
-     * @param string $createdsource
+     * @param string $createdIp
      *
      * @return User
      */
-    public function setCreatedsource($createdsource)
+    public function setCreatedIp($createdIp)
     {
-        $this->createdsource = $createdsource;
+        $this->createdIp = $createdIp;
 
         return $this;
     }
 
     /**
-     * Get createdsource
+     * Get createdIp
      *
      * @return string
      */
-    public function getCreatedsource()
+    public function getCreatedIp()
     {
-        return $this->createdsource;
+        return $this->createdIp;
     }
 
     /**
-     * Set updatedtime
+     * Set createdSource
      *
-     * @param integer $updatedtime
+     * @param string $createdSource
      *
      * @return User
      */
-    public function setUpdatedtime($updatedtime)
+    public function setCreatedSource($createdSource)
     {
-        $this->updatedtime = $updatedtime;
+        $this->createdSource = $createdSource;
 
         return $this;
     }
 
     /**
-     * Get updatedtime
+     * Get createdSource
+     *
+     * @return string
+     */
+    public function getCreatedSource()
+    {
+        return $this->createdSource;
+    }
+
+    /**
+     * Set updatedTime
+     *
+     * @param integer $updatedTime
+     *
+     * @return User
+     */
+    public function setUpdatedTime($updatedTime)
+    {
+        $this->updatedTime = $updatedTime;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedTime
      *
      * @return integer
      */
-    public function getUpdatedtime()
+    public function getUpdatedTime()
     {
-        return $this->updatedtime;
+        return $this->updatedTime;
     }
 
     /**
@@ -413,5 +414,4 @@ class User extends FOSUser
     {
         return $this->oauths;
     }
-
 }
