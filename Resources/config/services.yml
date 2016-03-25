@@ -4,3 +4,9 @@ services:
         arguments: [@service_container]
         tags: 
             - { name: kernel.event_subscriber }
+            
+    glory.user.listener.login:
+        class: Glory\Bundle\UserBundle\EventListener\LoginListener
+        arguments: [@service_container]
+        tags: 
+            - { name: kernel.event_subscriber }
