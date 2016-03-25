@@ -1,0 +1,24 @@
+{
+    "name": "foreverglory/user-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony UserBundle",
+    "keywords": ["symfony", "bundle", "user"],
+    "homepage": "http://foreverglory.me",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ForeverGlory",
+            "email": "foreverglory@qq.com",
+            "homepage": "http://foreverglory.me"
+        }
+    ],
+    "autoload": {
+        "psr-0": {"Glory\\Bundle\\UserBundle": ""}
+    },
+    "require": {
+        "friendsofsymfony/user-bundle": "~3.0",
+        "hwi/oauth-bundle": "~0.4"
+    },
+    "require-dev": {
+    }
+}
