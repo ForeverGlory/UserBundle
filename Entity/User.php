@@ -54,30 +54,9 @@ class User extends FOSUser
     /**
      * @var string
      *
-     * @ORM\Column(name="payPassword", type="string", length=64, nullable=true)
-     */
-    protected $payPassword;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="payPasswordSalt", type="string", length=64, nullable=true)
-     */
-    protected $payPasswordsalt;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
      */
     protected $avatar;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="setup", type="boolean", nullable=true)
-     */
-    protected $setup;
 
     /**
      * @var integer
@@ -142,54 +121,6 @@ class User extends FOSUser
     }
 
     /**
-     * Set payPassword
-     *
-     * @param string $payPassword
-     *
-     * @return User
-     */
-    public function setPayPassword($payPassword)
-    {
-        $this->payPassword = $payPassword;
-
-        return $this;
-    }
-
-    /**
-     * Get payPassword
-     *
-     * @return string
-     */
-    public function getPayPassword()
-    {
-        return $this->payPassword;
-    }
-
-    /**
-     * Set payPasswordsalt
-     *
-     * @param string $payPasswordsalt
-     *
-     * @return User
-     */
-    public function setPayPasswordsalt($payPasswordsalt)
-    {
-        $this->payPasswordsalt = $payPasswordsalt;
-
-        return $this;
-    }
-
-    /**
-     * Get payPasswordsalt
-     *
-     * @return string
-     */
-    public function getPayPasswordsalt()
-    {
-        return $this->payPasswordsalt;
-    }
-
-    /**
      * Set avatar
      *
      * @param string $avatar
@@ -211,30 +142,6 @@ class User extends FOSUser
     public function getAvatar()
     {
         return $this->avatar;
-    }
-
-    /**
-     * Set setup
-     *
-     * @param boolean $setup
-     *
-     * @return User
-     */
-    public function setSetup($setup)
-    {
-        $this->setup = $setup;
-
-        return $this;
-    }
-
-    /**
-     * Get setup
-     *
-     * @return boolean
-     */
-    public function getSetup()
-    {
-        return $this->setup;
     }
 
     /**
