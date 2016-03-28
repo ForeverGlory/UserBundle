@@ -10,3 +10,15 @@ services:
         arguments: [@service_container]
         tags: 
             - { name: kernel.event_subscriber }
+    
+    glory.user.security.handler.login_failure:
+        class: Glory\Bundle\UserBundle\Security\Handler\LoginFailureHandler
+        parent: security.authentication.failure_handler
+
+    glory.user.security.handler.login_success:
+        class: Glory\Bundle\UserBundle\Security\Handler\LoginSuccessHandler
+        parent: security.authentication.success_handler
+        
+    glory.user.security.handler.logout_success:
+        class: Glory\Bundle\UserBundle\Security\Handler\LogoutSuccessHandler
+        parent: security.logout.success_handler
