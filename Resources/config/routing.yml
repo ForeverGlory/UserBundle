@@ -2,3 +2,11 @@ glory_user_home:
     path:   /user
     defaults: { _controller: GloryUserBundle:Default:index }
 
+glory_user_login:
+    resource: routing/login.yml
+    prefix: /login
+
+glory_user_logout:
+    resource: routing/logout.yml
+    prefix: /logout
+
