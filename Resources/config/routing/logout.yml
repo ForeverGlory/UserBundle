@@ -1,0 +1,5 @@
+glory_user_logout:
+    path: /
+
+logout:
+    path: /
