@@ -34,9 +34,9 @@ class OAuth
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=32)
+     * @ORM\Column(name="owner", type="string", length=32)
      */
-    private $type;
+    private $owner;
 
     /**
      * @var string
@@ -154,11 +154,11 @@ class OAuth
     /**
      * Set type
      *
-     * @param string $type
+     * @param string $owner
      *
      * @return UserOAuth
      */
-    public function setType($type)
+    public function setOwner($owner)
     {
         $this->type = $type;
 
@@ -166,13 +166,13 @@ class OAuth
     }
 
     /**
-     * Get type
+     * Get owner
      *
      * @return string
      */
-    public function getType()
+    public function getOwner()
     {
-        return $this->type;
+        return $this->owner;
     }
 
     /**
