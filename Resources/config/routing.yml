@@ -1,0 +1,4 @@
+glory_user_home:
+    path:   /user
+    defaults: { _controller: GloryUserBundle:Default:index }
+
