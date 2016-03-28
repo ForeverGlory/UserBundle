@@ -1,0 +1,12 @@
+glory_user_login:
+    path: /
+    defaults: { _controller:GloryUserBundle:Login:login }
+    methods: [GET,POST]
+
+glory_user_check:
+    path: /check
+    methods: [POST]
+
+login_check:
+    path: /check
+    methods: [POST]
