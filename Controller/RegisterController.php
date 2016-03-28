@@ -49,7 +49,7 @@ class RegisterController extends Controller
                 break;
             //注册成功
             case 'FOSUserBundle:Registration:confirmed.html.twig':
-                $view = 'GloryUserBundle::register-confirmed.html.twig';
+                $view = 'GloryUserBundle:Register:success.html.twig';
                 break;
         }
         return parent::render($view, $parameters, $response);
