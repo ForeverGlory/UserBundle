@@ -6,6 +6,10 @@ glory_user_login:
     resource: routing/login.yml
     prefix: /login
 
+glory_user_register:
+    resource: routing/register.yml
+    prefix: /register
+
 glory_user_logout:
     resource: routing/logout.yml
     prefix: /logout

@@ -1,0 +1,11 @@
+glory_user_register:
+    path: /
+    defaults: { _controller: GloryUserBundle:Register:register }
+
+fos_user_registration_confirmed:
+    path: /success
+    defaults: { _controller: GloryUserBundle:Register:confirmed }
+
+glory_user_register_check_email:
+    path: /check/email
+    defaults: { _controller: GloryUserBundle:Register:checkEmail }
