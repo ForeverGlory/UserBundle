@@ -22,3 +22,8 @@ services:
     glory.user.security.handler.logout_success:
         class: Glory\Bundle\UserBundle\Security\Handler\LogoutSuccessHandler
         parent: security.logout.success_handler
+    
+    glory.user.security.provider.oauth_user:
+        class: Glory\Bundle\UserBundle\Security\Provider\OAuthUserProvider
+        arguments: [@doctrine]
+        
