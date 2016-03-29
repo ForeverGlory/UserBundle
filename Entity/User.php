@@ -34,6 +34,12 @@ use Glory\Bundle\UserBundle\Entity\OAuth;
  *              nullable = true,
  *              unique   = false
  *          )
+ *      ),
+ *      @AttributeOverride(name="password",
+ *          column=@ORM\Column(
+ *              name     = "password",
+ *              nullable = true
+ *          )
  *      )
  * })
  * 
