@@ -137,7 +137,6 @@ class OAuth
 
     public function __construct()
     {
-        $this->created = time();
         $this->updated = time();
     }
 
@@ -160,7 +159,7 @@ class OAuth
      */
     public function setOwner($owner)
     {
-        $this->type = $type;
+        $this->owner = $owner;
 
         return $this;
     }
