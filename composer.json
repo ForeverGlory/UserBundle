@@ -13,7 +13,7 @@
         }
     ],
     "autoload": {
-        "psr-0": {"Glory\\Bundle\\UserBundle": ""}
+        "psr-4": {"Glory\\Bundle\\UserBundle\\": ""}
     },
     "require": {
         "friendsofsymfony/user-bundle": "~3.0",
