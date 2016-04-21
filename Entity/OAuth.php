@@ -445,9 +445,9 @@ class OAuth
      *
      * @return UserOAuth
      */
-    public function setCreated($created)
+    public function setCreated($created = null)
     {
-        $this->created = $created;
+        $this->created = $created? : time();
 
         return $this;
     }
@@ -469,9 +469,9 @@ class OAuth
      *
      * @return UserOAuth
      */
-    public function setUpdated($updated)
+    public function setUpdated($updated = null)
     {
-        $this->updated = $updated;
+        $this->updated = $updated? : time();
 
         return $this;
     }
