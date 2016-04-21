@@ -1,29 +1,29 @@
 services:
-    glory.user.listener.registration:
+    glory_user.listener.registration:
         class: Glory\Bundle\UserBundle\EventListener\RegistrationListener
         arguments: [@service_container]
         tags: 
             - { name: kernel.event_subscriber }
             
-    glory.user.listener.login:
+    glory_user.listener.login:
         class: Glory\Bundle\UserBundle\EventListener\LoginListener
         arguments: [@service_container]
         tags: 
             - { name: kernel.event_subscriber }
     
-    glory.user.security.handler.login_failure:
+    glory_user.security.handler.login_failure:
         class: Glory\Bundle\UserBundle\Security\Handler\LoginFailureHandler
         parent: security.authentication.failure_handler
 
-    glory.user.security.handler.login_success:
+    glory_user.security.handler.login_success:
         class: Glory\Bundle\UserBundle\Security\Handler\LoginSuccessHandler
         parent: security.authentication.success_handler
         
-    glory.user.security.handler.logout_success:
+    glory_user.security.handler.logout_success:
         class: Glory\Bundle\UserBundle\Security\Handler\LogoutSuccessHandler
         parent: security.logout.success_handler
     
-    glory.user.security.provider.oauth_user:
+    glory_user.security.provider.oauth_user:
         class: Glory\Bundle\UserBundle\Security\Provider\OAuthUserProvider
         arguments: [@doctrine]
         
