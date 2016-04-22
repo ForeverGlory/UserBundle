@@ -57,8 +57,9 @@ class UserManager
      */
     public function createOAuthFromResponse(UserResponseInterface $response)
     {
-        $oauth = new $this->getOAuthClass();
-        $oauth->setOwner($response->getOAuthToken()->getResourceOwnerName());
+        $oauthClass = $this->getOAuthClass();
+        $oauth = new $oauthClass();
+        $oauth->setOwner($response->getResourceOwner()->getName());
         $oauth->setUsername($response->getUsername());
         $oauth->setCreated();
         $this->updateOAuthFromResponse($oauth, $response, true);
