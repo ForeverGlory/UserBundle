@@ -9,6 +9,7 @@
 namespace Glory\Bundle\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Glory\Bundle\UserBundle\Model\OAuth as BaseOAuth;
 use Glory\Bundle\UserBundle\Entity\User;
 
 /**
@@ -19,7 +20,7 @@ use Glory\Bundle\UserBundle\Entity\User;
  * 
  * @author ForeverGlory <foreverglory@qq.com>
  */
-class OAuth
+class OAuth extends BaseOAuth
 {
 
     /**
