@@ -14,3 +14,28 @@ glory_user_logout:
     resource: routing/logout.yml
     prefix: /logout
 
+# oauth #
+glory_user_oauth:
+    path: /connect
+    defaults: { _controller: GloryUserBundle:OAuth:connect }
+glory_user_oauth_callback:
+    path: /connect/{service}/callback
+glory_user_oauth_redirect:
+    path: /connect/{service}
+    defaults: { _controller: GloryUserBundle:OAuth:redirectToService }
+glory_user_oauth_register:
+    path:   /connect/register/{key}
+    defaults: { _controller: GloryUserBundle:OAuth:register }
+glory_user_oauth_login:
+    path:   /connect/login/{key}
+    defaults: { _controller: GloryUserBundle:OAuth:login }
+
+hwi_oauth_connect:
+    path: /connect
+    defaults: { _controller: GloryUserBundle:OAuth:connect }
+hwi_oauth_service_redirect:
+    path:   /connect/{service}
+    defaults: { _controller: GloryUserBundle:OAuth:redirectToService }
+hwi_oauth_connect_registration:
+    path:   /connect/register/{key}
+    defaults: { _controller: GloryUserBundle:OAuth:registration }
