@@ -32,9 +32,9 @@ class RegisterController extends Controller
      * 
      * @see parent::confirmedAction()
      */
-    public function confirmedAction(Request $request)
+    public function confirmedAction()
     {
-        return parent::confirmedAction($request);
+        return parent::confirmedAction();
     }
 
     /**
