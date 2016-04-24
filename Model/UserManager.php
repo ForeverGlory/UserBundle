@@ -72,7 +72,7 @@ class UserManager
      * @param UserResponseInterface $response
      * @return OAuth
      */
-    public function updateOAuthFromResponse(OAuth $oauth, UserResponseInterface $response = null, $andFlush = false)
+    public function updateOAuthFromResponse(OAuth $oauth, UserResponseInterface $response, $andFlush = false)
     {
         $oauth->setNickname($response->getNickname());
         $oauth->setFirstname($response->getFirstName());
@@ -99,6 +99,12 @@ class UserManager
     public function bindOAuth(User $user, OAuth $oauth)
     {
         $oauth->setUser($user);
+        $this->updateOAuth($oauth, true);
+        $user->addOAuth($oauth);
+    }
+    
+    public function unBindOAuth(User $user, OAuth $oauth){
+        $oauth->setUser(null);
         $this->updateOAuth($oauth, true);
     }
 
