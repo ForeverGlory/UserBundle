@@ -111,7 +111,7 @@ class OAuthController extends ConnectController
         $userManager = $this->get('fos_user.user_manager');
         $session = $request->getSession();
         if (time() - $key > 300) {
-            //throw new \Exception('Timeout, please try again.');
+            throw new \Exception('Timeout, please try again.');
         }
         $error = $session->get('_hwi_oauth.registration_error.' . $key);
         $oauth = $this->getOAuthFromError($error);
