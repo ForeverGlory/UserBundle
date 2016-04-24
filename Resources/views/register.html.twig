@@ -1,10 +1,10 @@
 {% extends "GloryUserBundle::layout.html.twig" %}
 
-{% block fos_user_content %}
+{% block content %}
     <form action="{{ path('glory_user_register',{goto:app.request.get('goto')}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
         {{ form_widget(form) }}
         <div>
             <input type="submit" value="{{ 'registration.submit'|trans }}" />
         </div>
     </form>
-{% endblock fos_user_content %}
+{% endblock %}
