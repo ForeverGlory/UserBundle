@@ -2,21 +2,24 @@
 
 namespace Glory\Bundle\UserBundle\Security\Provider;
 
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
-use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\Exception\AccountNotLinkedException;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Glory\Bundle\UserBundle\Entity\OAuth;
 
 class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProviderInterface
 {
+
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
 
     /**
      * @var ObjectManager
@@ -24,39 +27,11 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
     protected $em;
 
     /**
-     * @var string
-     */
-    protected $class;
-
-    /**
-     * @var ObjectRepository
-     */
-    protected $repository;
-
-    /**
      * Constructor.
-     *
-     * @param ManagerRegistry $registry    Manager registry.
      */
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ContainerInterface $container)
     {
-        $this->class = 'GloryUserBundle:OAuth';
-        $this->em = $registry->getManager();
-        $this->repository = $this->em->getRepository($this->class);
-    }
-
-    /**
-     * @param array $criteria
-     *
-     * @return object
-     */
-    protected function findUser(array $criteria)
-    {
-        if (null === $this->repository) {
-            $this->repository = $this->em->getRepository($this->class);
-        }
-        $oauth = $this->repository->findOneBy($criteria);
-        return $oauth ? $oauth->getUser() : $oauth;
+        $this->container = $container;
     }
 
     /**
@@ -64,11 +39,10 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
      */
     public function loadUserByUsername($username)
     {
-        $user = $this->findUser(array('username' => $username));
+        $user = $this->em->getRepository('GloryUserBundle:User')->findUser(array('username' => $username));
         if (!$user) {
             throw new UsernameNotFoundException(sprintf("User '%s' not found.", $username));
         }
-
         return $user;
     }
 
@@ -77,10 +51,20 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
+        $user_manager = $this->container->get('glory_user.user_manager');
         $resourceOwnerName = $response->getResourceOwner()->getName();
-        $criteria = array('owner' => $resourceOwnerName, 'username' => $response->getUsername());
-        if (null == $user = $this->findUser($criteria)) {
-            throw new AccountNotLinkedException(sprintf("User '%s' not found.", $response->getNickname()));
+        $oauth = $user_manager->findOAuth(array('owner' => $resourceOwnerName, 'username' => $response->getUsername()));
+        if (!$oauth) {
+            $oauth = $user_manager->createOAuthFromResponse($response);
+        } else {
+            $user_manager->updateOAuthFromResponse($oauth, $response, true);
+        }
+
+        if (!$oauth || null == $user = $oauth->getUser()) {
+            //throw new AccountNotLinkedException(sprintf("User '%s' not found.", $response->getUsername()));
+            $exception = new AccountNotLinkedException(sprintf("User '%s' not found.", $response->getUsername()));
+            $exception->setUsername($response->getUsername());
+            throw $exception;
         }
         return $user;
     }
@@ -90,7 +74,7 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
      */
     public function refreshUser(UserInterface $user)
     {
-        return $user;
+        return $this->em->getRepository('GloryUserBundle:User')->findOneByUsername($user->getUsername());
     }
 
     /**

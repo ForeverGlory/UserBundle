@@ -25,7 +25,7 @@ services:
     
     glory_user.security.provider.oauth_user:
         class: Glory\Bundle\UserBundle\Security\Provider\OAuthUserProvider
-        arguments: [@doctrine]
+        arguments: [@service_container]
 
     glory_user.user_manager:
         class: Glory\Bundle\UserBundle\Model\UserManager
