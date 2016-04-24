@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\AttributeOverrides;
 use Doctrine\ORM\Mapping\AttributeOverride;
 use FOS\UserBundle\Model\User as FOSUser;
+use Glory\Bundle\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Glory\Bundle\UserBundle\Entity\Group;
 use Glory\Bundle\UserBundle\Entity\OAuth;
@@ -45,7 +46,7 @@ use Glory\Bundle\UserBundle\Entity\OAuth;
  * 
  * @author ForeverGlory <foreverglory@qq.com>
  */
-class User extends FOSUser
+class User extends BaseUser
 {
 
     /**
@@ -147,7 +148,7 @@ class User extends FOSUser
      */
     public function getAvatar()
     {
-        return $this->avatar;
+        return $this->avatar?:'/bundles/gloryuser/images/avatar.jpg';
     }
 
     /**
