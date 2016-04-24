@@ -2,17 +2,38 @@ glory_user_home:
     path:   /user
     defaults: { _controller: GloryUserBundle:Default:index }
 
+# login #
 glory_user_login:
-    resource: routing/login.yml
-    prefix: /login
+    path: /login
+    defaults: { _controller:GloryUserBundle:Login:login }
+glory_user_check:
+    path: /login/check
+    methods: [POST]
 
-glory_user_register:
-    resource: routing/register.yml
-    prefix: /register
-
+# logout #
 glory_user_logout:
-    resource: routing/logout.yml
-    prefix: /logout
+    path: /logout
+
+# register #
+glory_user_register:
+    path: /register
+    defaults: { _controller: GloryUserBundle:Register:register }
+fos_user_registration_confirmed:
+    path: /register/success
+    defaults: { _controller: GloryUserBundle:Register:confirmed }
+glory_user_register_check_email:
+    path: /register/check/email
+    defaults: { _controller: GloryUserBundle:Register:checkEmail }
+
+# profile #
+glory_user_profile:
+    path: /my/profile
+glory_user_password:
+    path: /my/password
+glory_user_avatar:
+    path: /my/avatar
+glory_user_connect:
+    path: /my/connect
 
 # oauth #
 glory_user_oauth:
