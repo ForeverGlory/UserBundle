@@ -15,6 +15,7 @@
     "autoload": {
         "psr-4": {"Glory\\Bundle\\UserBundle\\": ""}
     },
+    "minimum-stability": "dev",
     "require": {
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "hwi/oauth-bundle": "~0.4"
