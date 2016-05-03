@@ -1,0 +1,10 @@
+{% extends "GloryUserBundle::layout.html.twig" %}
+
+{% block content %}
+    <form action="{{ path('glory_user_avatar') }}" {{ form_enctype(form) }} method="POST">
+        {{ form_widget(form) }}
+        <div>
+            <input type="submit" value="{{ 'change_avatar.submit'|trans }}" />
+        </div>
+    </form>
+{% endblock content %}

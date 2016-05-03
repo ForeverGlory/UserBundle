@@ -33,6 +33,7 @@ glory_user_password:
     defaults: { _controller: GloryUserBundle:Profile:password }
 glory_user_avatar:
     path: /my/avatar
+    defaults: { _controller: GloryUserBundle:Profile:avatar }
 glory_user_connect:
     path: /my/connect
 
