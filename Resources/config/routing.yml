@@ -86,3 +86,20 @@ glory_user_group_edit:
 glory_user_group_delete:
     path: /admin/group/{name}/delete
     defaults: { _controller: GloryUserBundle:Admin\Group:delete }
+
+# admin user #
+glory_user_manage:
+    path: /admin/user
+    defaults: { _controller: GloryUserBundle:Admin\User:list }
+glory_user_manage_create:
+    path: /admin/user/create
+    defaults: { _controller: GloryUserBundle:Admin\User:create }
+glory_user_manage_show:
+    path: /admin/user/{id}
+    defaults: { _controller: GloryUserBundle:Admin\User:show }
+glory_user_manage_edit:
+    path: /admin/user/{id}/edit
+    defaults: { _controller: GloryUserBundle:Admin\User:edit }
+glory_user_manage_delete:
+    path: /admin/user/{id}/delete
+    defaults: { _controller: GloryUserBundle:Admin\User:delete }
