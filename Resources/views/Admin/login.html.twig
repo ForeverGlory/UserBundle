@@ -1,11 +1,11 @@
-{% extends "GloryUserBundle::layout.html.twig" %}
+{% extends "GloryUserBundle:Admin:layout.html.twig" %}
 
 {% block content %}
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
     {% block glory_user_login %}
-        <form action="{{ path("glory_user_check",{goto:app.request.get('goto')}) }}" method="post">
+        <form action="{{ path("glory_user_admin_check") }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
             <label for="username">{{ 'security.login.username'|trans }}</label>
@@ -20,15 +20,4 @@
             <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
         </form>
     {% endblock%}
-    {% block glory_user_oauth %}
-        {% for owner in hwi_oauth_resource_owners() %}
-            {% if loop.first %}
-                <ul>
-            {% endif %}
-                <li class="oauth-{{owner}}"><a href="{{ path('glory_user_oauth_redirect',{service:owner}) }}">{{ owner | trans({}, 'HWIOAuthBundle') }}</a></li>
-            {% if loop.last %}
-                </ul>
-            {% endif %}
-        {% endfor %}
-    {% endblock %}
 {% endblock %}
