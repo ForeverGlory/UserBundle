@@ -5,7 +5,7 @@ glory_user_home:
 # login #
 glory_user_login:
     path: /login
-    defaults: { _controller:GloryUserBundle:Login:login }
+    defaults: { _controller:GloryUserBundle:Security:login }
 glory_user_check:
     path: /login/check
     methods: [POST]
