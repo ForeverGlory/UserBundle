@@ -62,3 +62,12 @@ hwi_oauth_service_redirect:
 hwi_oauth_connect_registration:
     path:   /connect/register/{key}
     defaults: { _controller: GloryUserBundle:OAuth:registration }
+
+# admin security #
+glory_user_admin_login:
+    path:   /admin/login
+    defaults: { _controller: GloryUserBundle:Admin\Security:login }
+glory_user_admin_check:
+    path:   /admin/check
+glory_user_admin_logout:
+    path:   /admin/logout
