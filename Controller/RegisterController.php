@@ -45,7 +45,7 @@ class RegisterController extends Controller
         switch ($view) {
             //用户注册
             case 'FOSUserBundle:Registration:register.html.twig':
-                $view = 'GloryUserBundle::register.html.twig';
+                $view = 'GloryUserBundle:Register:register.html.twig';
                 break;
             //注册成功
             case 'FOSUserBundle:Registration:confirmed.html.twig':
