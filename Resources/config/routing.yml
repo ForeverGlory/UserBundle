@@ -2,15 +2,13 @@ glory_user_home:
     path:   /user
     defaults: { _controller: GloryUserBundle:Default:index }
 
-# login #
+# security #
 glory_user_login:
     path: /login
     defaults: { _controller:GloryUserBundle:Security:login }
 glory_user_check:
     path: /login/check
     methods: [POST]
-
-# logout #
 glory_user_logout:
     path: /logout
 
