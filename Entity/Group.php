@@ -30,9 +30,9 @@ class Group extends FOSGroup
      */
     protected $id;
 
-    public function __construct()
+    public function __construct($name, $roles = array())
     {
-        parent::__construct();
+        parent::__construct($name, $roles = array());
     }
 
 }
