@@ -19,7 +19,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
  *
  * @author ForeverGlory <foreverglory@qq.com>
  */
-class UserManager
+class UserManager implements UserManagerInterface
 {
 
     protected $container;
@@ -102,8 +102,9 @@ class UserManager
         $this->updateOAuth($oauth, true);
         $user->addOAuth($oauth);
     }
-    
-    public function unBindOAuth(User $user, OAuth $oauth){
+
+    public function unBindOAuth(User $user, OAuth $oauth)
+    {
         $oauth->setUser(null);
         $this->updateOAuth($oauth, true);
     }
@@ -122,6 +123,34 @@ class UserManager
         }
 
         return $this->container->get('doctrine');
+    }
+
+    public function __call($name, $arguments)
+    {
+        $userManager = $this->getFOSUserManager();
+        if (method_exists($userManager, $name)) {
+            return call_user_func_array(array($userManager, $name), $arguments);
+        }
+    }
+
+    /**
+     * @return \FOS\UserBundle\Model\UserManagerInterface
+     */
+    protected function getFOSUserManager()
+    {
+        return $this->container->get('fos_user.user_manager');
+    }
+
+    public function findUsers(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+
+        $userManager = $this->getFOSUserManager();
+        return $userManager->findUsers();
+    }
+
+    public function getClass()
+    {
+        return $this->getFOSUserManager()->getClass();
     }
 
 }
