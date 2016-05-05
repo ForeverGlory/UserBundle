@@ -69,3 +69,20 @@ glory_user_admin_check:
     path:   /admin/check
 glory_user_admin_logout:
     path:   /admin/logout
+
+# admin group #
+glory_user_group:
+    path: /admin/group
+    defaults: { _controller: GloryUserBundle:Admin\Group:list }
+glory_user_group_create:
+    path: /admin/group/create
+    defaults: { _controller: GloryUserBundle:Admin\Group:create }
+glory_user_group_show:
+    path: /admin/group/{name}
+    defaults: { _controller: GloryUserBundle:Admin\Group:show }
+glory_user_group_edit:
+    path: /admin/group/{name}/edit
+    defaults: { _controller: GloryUserBundle:Admin\Group:edit }
+glory_user_group_delete:
+    path: /admin/group/{name}/delete
+    defaults: { _controller: GloryUserBundle:Admin\Group:delete }
