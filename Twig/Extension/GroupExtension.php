@@ -33,6 +33,13 @@ class GroupExtension extends \Twig_Extension
         );
     }
 
+    public function getFilters()
+    {
+        return array(
+            new \Twig_SimpleFilter('group', array($this, 'getGroup'))
+        );
+    }
+
     public function getGroup($name)
     {
         $manager = $this->getGroupManager();
