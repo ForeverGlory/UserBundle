@@ -1,13 +1,51 @@
 {% extends "GloryUserBundle:Admin:layout.html.twig" %}
 
 {% block content %}
-    <div class="user_list">
-        <ul>
+    <div class="user-list">
+        <form action="{{path('glory_user_manage')}}" method="get">
+            <label>UserName</label>
+            <input type="text" name="username" value="{{app.request.get('username')}}" />
+            <label for="id">Group</label> 
+            <select id="group" name="group">
+                {% for group in groups %}
+                    <option value="{{group.id}}"{% if app.request.get('group') eq group.id %} selected="selected"{% endif %}>{{group.name}}</option>
+                {% endfor %}
+            </select>
+        </form>
+        <table>
+            <tr>
+                <th></th>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>Avatar</th>
+                <th>Created</th>
+                <th>Login</th>
+                <th>Status</th>
+            </tr>
             {% for user in users %}
-
-                <li><a href="{{ path('glory_user_manage_show', {'id': user.id}) }}">{{user.username}}</a></li>
-
+                <tr>
+                    <td><input type="checkbox" name="id[]" value="{{user.id}}" /></td>
+                    <td><a href="{{path('glory_user_manage_show', {'id': user.id})}}" target="_blank">{{user.username}}</a></td>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <img src="{{user.avatar}}" width="50" height="50"/>
+                    </td>
+                    <td>
+                        {{user.createdTime|date('Y-m-d H:i:s')}}
+                        {{user.createdIp}}
+                    </td>
+                    <td>
+                        {{user.loginTime}}
+                        {{user.loginIp}}
+                    </td>
+                    <td>{{user.groups|join(",")}}</td>
+                    <td>{{user.enable}}</td>
+                    <td>
+                        <a href="{{ path('glory_user_manage_edit', {'id': user.id}) }}">编辑</a>
+                        <a href="{{ path('glory_user_manage_delete', {'id': user.id}) }}">删除</a>
+                    </td>
+                </tr>
             {% endfor %}
-        </ul>
+        </table>
     </div>
 {% endblock %}

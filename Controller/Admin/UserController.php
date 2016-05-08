@@ -11,7 +11,7 @@ namespace Glory\Bundle\UserBundle\Controller\Admin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Glory\Bundle\UserBundle\Model\UserManager;
-use FOS\UserBundle\Model\UserManagerInterface;
+use Glory\Bundle\UserBundle\Model\GroupManager;
 
 /**
  * Description of UserController
@@ -23,26 +23,43 @@ class UserController extends Controller
 
     public function listAction(Request $request)
     {
-        $userManager = $this->getUserManager();
-        $users = $userManager->findUsers();
+        $query = $request->query;
+        $criteria = $query->all();
+        $orderBy = $query->get('order', 'created');
+        $page = $query->get('page', 1);
+        $limit = $query->get('limit', 20);
+        $users = $this->getUserManager()->findUsers($criteria, $orderBy, $limit, ($page - 1) * $limit);
+        $groups = $this->getGroupManager()->findGroups();
+        $pagination = '';
         return $this->render('GloryUserBundle:Admin/User:list.html.twig', array(
-                    'users' => $users
+                    'groups' => $groups,
+                    'users' => $users,
+                    'pagination' => $pagination
         ));
     }
 
     public function showAction(Request $request, $id)
     {
         $user = $this->getUserManager()->findUserBy(['id' => $id]);
+        return $this->render('GloryUserBundle:Admin/User:show.html.twig', [
+                    'user' => $user
+        ]);
     }
 
     public function createAction(Request $request)
     {
-        
+        $user = $this->getUserManager()->createUser();
+        return $this->render('GloryUserBundle:Admin/User:edit.html.twig', [
+                    'user' => $user
+        ]);
     }
 
     public function editAction(Request $request, $id)
     {
-        
+        $user = $this->getUserManager()->findUser();
+        return $this->render('GloryUserBundle:Admin/User:edit.html.twig', array(
+                    'user' => $user
+        ));
     }
 
     public function deleteAction(Request $request, $id)
@@ -58,6 +75,14 @@ class UserController extends Controller
     protected function getUserManager()
     {
         return $this->get('glory_user.user_manager');
+    }
+
+    /**
+     * @return GroupManager
+     */
+    protected function getGroupManager()
+    {
+        return $this->get('glory_user.group_manager');
     }
 
 }
