@@ -124,6 +124,10 @@ security:
                 path: glory_user_logout 
             anonymous:    true
 ```
+### Code
+extends Glory\Bundle\UserBundle\Entity\AbstractUser
+
+extends Glory\Bundle\UserBundle\Entity\AbstractGroup
 
 More
 ------------

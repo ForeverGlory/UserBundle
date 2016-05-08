@@ -31,10 +31,7 @@ class ProfileController extends Controller
      */
     public function passwordAction(Request $request)
     {
-        $user = $this->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
-            throw $this->createAccessDeniedException('This user does not have access to this section.');
-        }
+        $user = $this->getUserOrThrowException();
 
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
@@ -79,12 +76,36 @@ class ProfileController extends Controller
 
     public function avatarAction(Request $request)
     {
-        
+        $user = $this->getUserOrThrowException();
+        $form = $this->createForm('form', $user)
+                ->add('avatar', 'text');
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $manager = $this->get('fos_user.user_manager');
+            $manager->updateUser($user);
+
+            $url = $this->generateUrl('glory_user_avatar');
+            $response = new RedirectResponse($url);
+
+            return $response;
+        }
+        return $this->render('GloryUserBundle:Profile:avatar.html.twig', array(
+                    'form' => $form->createView()
+        ));
     }
 
     public function infoAction(Request $request)
     {
         
+    }
+
+    protected function getUserOrThrowException()
+    {
+        $user = $this->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw $this->createAccessDeniedException('This user does not have access to this section.');
+        }
+        return $user;
     }
 
 }

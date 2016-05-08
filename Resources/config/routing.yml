@@ -2,15 +2,13 @@ glory_user_home:
     path:   /user
     defaults: { _controller: GloryUserBundle:Default:index }
 
-# login #
+# security #
 glory_user_login:
     path: /login
-    defaults: { _controller:GloryUserBundle:Login:login }
+    defaults: { _controller:GloryUserBundle:Security:login }
 glory_user_check:
     path: /login/check
     methods: [POST]
-
-# logout #
 glory_user_logout:
     path: /logout
 
@@ -33,6 +31,7 @@ glory_user_password:
     defaults: { _controller: GloryUserBundle:Profile:password }
 glory_user_avatar:
     path: /my/avatar
+    defaults: { _controller: GloryUserBundle:Profile:avatar }
 glory_user_connect:
     path: /my/connect
 
@@ -61,3 +60,46 @@ hwi_oauth_service_redirect:
 hwi_oauth_connect_registration:
     path:   /connect/register/{key}
     defaults: { _controller: GloryUserBundle:OAuth:registration }
+
+# admin security #
+glory_user_admin_login:
+    path:   /admin/login
+    defaults: { _controller: GloryUserBundle:Admin\Security:login }
+glory_user_admin_check:
+    path:   /admin/check
+glory_user_admin_logout:
+    path:   /admin/logout
+
+# admin group #
+glory_user_group:
+    path: /admin/group
+    defaults: { _controller: GloryUserBundle:Admin\Group:list }
+glory_user_group_create:
+    path: /admin/group/create
+    defaults: { _controller: GloryUserBundle:Admin\Group:create }
+glory_user_group_show:
+    path: /admin/group/{name}
+    defaults: { _controller: GloryUserBundle:Admin\Group:show }
+glory_user_group_edit:
+    path: /admin/group/{name}/edit
+    defaults: { _controller: GloryUserBundle:Admin\Group:edit }
+glory_user_group_delete:
+    path: /admin/group/{name}/delete
+    defaults: { _controller: GloryUserBundle:Admin\Group:delete }
+
+# admin user #
+glory_user_manage:
+    path: /admin/user
+    defaults: { _controller: GloryUserBundle:Admin\User:list }
+glory_user_manage_create:
+    path: /admin/user/create
+    defaults: { _controller: GloryUserBundle:Admin\User:create }
+glory_user_manage_show:
+    path: /admin/user/{id}
+    defaults: { _controller: GloryUserBundle:Admin\User:show }
+glory_user_manage_edit:
+    path: /admin/user/{id}/edit
+    defaults: { _controller: GloryUserBundle:Admin\User:edit }
+glory_user_manage_delete:
+    path: /admin/user/{id}/delete
+    defaults: { _controller: GloryUserBundle:Admin\User:delete }
