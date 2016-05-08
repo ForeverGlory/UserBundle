@@ -30,6 +30,9 @@ services:
     glory_user.user_manager:
         class: Glory\Bundle\UserBundle\Model\UserManager
         arguments: [@service_container]
+    glory_user.group_manager:
+        class: Glory\Bundle\UserBundle\Model\GroupManager
+        arguments: [@service_container]
 
     glory_user.twig.user_extension:
         class: Glory\Bundle\UserBundle\Twig\Extension\UserExtension
