@@ -49,16 +49,38 @@ class UserController extends Controller
     public function createAction(Request $request)
     {
         $user = $this->getUserManager()->createUser();
+        $form = $this->createFormBuilder($user)
+                ->add('username', 'text')
+                ->add('password', 'password')
+                ->getForm();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $user = $form->getData();
+            $this->getUserManager()->updateUser($user);
+            return $this->redirectToRoute('glory_user_manage');
+        }
         return $this->render('GloryUserBundle:Admin/User:edit.html.twig', [
-                    'user' => $user
+                    'user' => $user,
+                    'form' => $form->createView()
         ]);
     }
 
     public function editAction(Request $request, $id)
     {
-        $user = $this->getUserManager()->findUser();
+        $user = $this->getUserManager()->findUserBy(['id' => $id]);
+        $form = $this->createFormBuilder($user)
+                ->add('username', 'text')
+                ->getForm();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $user = $form->getData();
+            $this->getUserManager()->updateUser($user);
+            return $this->redirectToRoute('glory_user_manage_edit', ['id' => $id]);
+        }
+
         return $this->render('GloryUserBundle:Admin/User:edit.html.twig', array(
-                    'user' => $user
+                    'user' => $user,
+                    'form' => $form->createView()
         ));
     }
 

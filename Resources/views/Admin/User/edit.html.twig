@@ -3,8 +3,7 @@
 {% block content %}
     <div class="user-edit">
         <form action="{{path('glory_user_manage_edit')}}" method="post">
-            <label>UserName</label>
-            <input type="text" name="username" value="{{user.username}}" />
+            {{ form_widget(form) }}
             <input type="submit" value="保存" />
         </form>
     </div>
