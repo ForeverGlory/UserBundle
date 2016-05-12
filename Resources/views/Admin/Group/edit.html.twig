@@ -1,0 +1,9 @@
+{% extends "GloryUserBundle:Admin:layout.html.twig" %}
+{% block content %}
+    <form action="{{ path('glory_user_group_edit', {'id': group.getId()} ) }}" {{ form_enctype(form) }} method="POST" class="group-edit">
+        {{ form_widget(form) }}
+        <div>
+            <input type="submit" value="{{ 'group.edit.submit'|trans }}" />
+        </div>
+    </form>
+{% endblock %}

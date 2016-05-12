@@ -78,13 +78,13 @@ glory_user_group_create:
     path: /admin/group/create
     defaults: { _controller: GloryUserBundle:Admin\Group:create }
 glory_user_group_show:
-    path: /admin/group/{name}
+    path: /admin/group/{id}
     defaults: { _controller: GloryUserBundle:Admin\Group:show }
 glory_user_group_edit:
-    path: /admin/group/{name}/edit
+    path: /admin/group/{id}/edit
     defaults: { _controller: GloryUserBundle:Admin\Group:edit }
 glory_user_group_delete:
-    path: /admin/group/{name}/delete
+    path: /admin/group/{id}/delete
     defaults: { _controller: GloryUserBundle:Admin\Group:delete }
 
 # admin user #

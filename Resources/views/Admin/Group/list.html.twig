@@ -1,0 +1,10 @@
+{% extends "GloryUserBundle:Admin:layout.html.twig" %}
+{% block content %}
+    <div class="group-list">
+        <ul>
+            {% for group in groups %}
+                <li><a href="{{ path('glory_user_group_show', {'id': group.getId()} ) }}">{{ group.getName() }}</a></li>
+                {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
