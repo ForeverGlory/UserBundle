@@ -1,9 +1,12 @@
 <?php
 
 /*
+ * This file is part of the current project.
+ * 
  * (c) ForeverGlory <http://foreverglory.me/>
  * 
  * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Glory\Bundle\UserBundle\Model;
@@ -25,6 +28,7 @@ class User extends FOSUser
     protected $createdIp;
     protected $createdSource;
     protected $updateTime;
+    protected $profile;
 
     /**
      * Set avatar
@@ -192,6 +196,37 @@ class User extends FOSUser
     public function getUpdatedTime()
     {
         return $this->updatedTime;
+    }
+
+    /**
+     * Set profile
+     *
+     * @param Profile $profile
+     *
+     * @return User
+     */
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
+    /**
+     * Get Profile
+     * 
+     * @return Profile
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    public function __call($method, $arguments)
+    {
+        $profile = $this->getProfile();
+        if ($profile && method_exists($profile, $method)) {
+            return call_user_method_array($method, $profile, $arguments);
+        }
     }
 
 }
