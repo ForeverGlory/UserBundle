@@ -8,6 +8,8 @@
 
 namespace Glory\Bundle\UserBundle\Model;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * Description of GroupManager
  *
@@ -15,6 +17,13 @@ namespace Glory\Bundle\UserBundle\Model;
  */
 class GroupManager
 {
+
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
     public function __call($name, $arguments)
     {
