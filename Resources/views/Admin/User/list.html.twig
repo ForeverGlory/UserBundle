@@ -5,10 +5,10 @@
         <form action="{{path('glory_user_manage')}}" method="get">
             <label>UserName</label>
             <input type="text" name="username" value="{{app.request.get('username')}}" />
-            <label for="id">Group</label> 
+            <label for="group">Group</label> 
             <select id="group" name="group">
                 {% for group in groups %}
-                    <option value="{{group.id}}"{% if app.request.get('group') eq group.id %} selected="selected"{% endif %}>{{group.name}}</option>
+                    <option value="{{group.id}}"{% if app.request.get('group') == group.id %} selected="selected"{% endif %}>{{group.name}}</option>
                 {% endfor %}
             </select>
         </form>
