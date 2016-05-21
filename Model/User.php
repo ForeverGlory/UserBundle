@@ -12,15 +12,40 @@
 namespace Glory\Bundle\UserBundle\Model;
 
 use FOS\UserBundle\Model\User as FOSUser;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Description of User
  *
+ * @UniqueEntity(
+ *      fields="usernameCanonical",
+ *      errorPath="username",
+ *      message="fos_user.username.already_used",
+ *      groups={"Register","Profile"}
+ * )
+ * 
  * @author ForeverGlory <foreverglory@qq.com>
  */
 class User extends FOSUser
 {
 
+    /**
+     * @Assert\NotBlank(message="fos_user.username.blank", groups={"Register", "Profile"})
+     * @Assert\Length(min=2, minMessage="fos_user.username.short", max=16, maxMessage="fos_user.username.long", groups={"Register","Profile"})
+     */
+    protected $username;
+
+    /**
+     * @Assert\Email(message="fos_user.email.invalid", groups={"Register","Profile"})
+     */
+    protected $email;
+
+    /**
+     * @Assert\NotBlank(message="fos_user.password.blank", groups={"Register","ResetPassword","ChangePassword"})
+     * @Accset\Length(min=6, minMessage="fos_user.password.short", max=32, groups={"Register","Profile","ResetPassword","ChangePassword"})
+     */
+    protected $plainPassword;
     protected $avatar;
     protected $loginTime;
     protected $loginIp;
