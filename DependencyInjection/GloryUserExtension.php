@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the current project.
+ * 
+ * (c) ForeverGlory <https://foreverglory.me/>
+ * 
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Glory\Bundle\UserBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -11,9 +20,11 @@ use Symfony\Component\DependencyInjection\Loader;
  * This is the class that loads and manages your bundle configuration
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
+ * @author ForeverGlory <foreverglory@qq.com>
  */
 class GloryUserExtension extends Extension
 {
+
     /**
      * {@inheritdoc}
      */
@@ -22,8 +33,10 @@ class GloryUserExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('register.yml');
+        $loader->load('group.yml');
     }
+
 }
