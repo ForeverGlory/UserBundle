@@ -1,0 +1,8 @@
+services:
+    glory_user.group.form:
+        class: Glory\Bundle\UserBundle\Form\Type\GroupFormType
+        parent: fos_user.group.form.type
+        calls:
+            - [setContainer,[@service_container]]
+        tags: 
+            - {name:form.type, alias:glory_user_group}
