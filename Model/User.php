@@ -43,7 +43,7 @@ class User extends FOSUser
 
     /**
      * @Assert\NotBlank(message="fos_user.password.blank", groups={"Register","ResetPassword","ChangePassword"})
-     * @Accset\Length(min=6, minMessage="fos_user.password.short", max=32, groups={"Register","Profile","ResetPassword","ChangePassword"})
+     * @Assert\Length(min=6, minMessage="fos_user.password.short", max=32, groups={"Register","Profile","ResetPassword","ChangePassword"})
      */
     protected $plainPassword;
     protected $avatar;
