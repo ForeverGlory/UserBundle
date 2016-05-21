@@ -14,6 +14,7 @@ namespace Glory\Bundle\UserBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Glory\Bundle\UserBundle\DependencyInjection\Compiler\RegisterPass;
+use Glory\Bundle\UserBundle\DependencyInjection\Compiler\GroupPass;
 
 /**
  * build
@@ -27,6 +28,7 @@ class GloryUserBundle extends Bundle
     {
         parent::build($container);
         $container->addCompilerPass(new RegisterPass());
+        $container->addCompilerPass(new GroupPass());
     }
 
 }
