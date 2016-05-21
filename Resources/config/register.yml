@@ -1,0 +1,7 @@
+## YAML Template.
+services:
+    glory_user.register.form:
+        class: Glory\Bundle\UserBundle\Form\Type\RegisterFormType
+        parent: fos_user.registration.form.type
+        tags: 
+            - {name:form.type, alias:glory_user_register}
