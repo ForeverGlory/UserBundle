@@ -39,7 +39,7 @@ class RegisterPass implements CompilerPassInterface
         if ($container->hasParameter($formName)) {
             $value = $container->getParameter($formName);
             if ($value == 'fos_user_registration_form') {
-                $container->setParameter($formName, 'glory_user_register_form');
+                $container->setParameter($formName, 'user');
             }
         }
 
