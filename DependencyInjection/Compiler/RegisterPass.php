@@ -42,6 +42,16 @@ class RegisterPass implements CompilerPassInterface
                 $container->setParameter($formName, 'glory_user_register_form');
             }
         }
+
+        $formName = 'fos_user.registration.form.validation_groups';
+        if ($container->hasParameter($formName)) {
+            $groups = $container->getParameter($formName);
+            if (in_array('Registration', $groups)) {
+                $key = array_search('Registration', $groups);
+                $groups[$key] = 'Register';
+                $container->setParameter($formName, $groups);
+            }
+        }
     }
 
 }
