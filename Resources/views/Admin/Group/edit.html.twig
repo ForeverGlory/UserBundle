@@ -1,9 +1,11 @@
 {% extends "GloryUserBundle:Admin:layout.html.twig" %}
 {% block content %}
-    <form action="{{ path('glory_user_group_edit', {'id': group.getId()} ) }}" {{ form_enctype(form) }} method="POST" class="group-edit">
-        {{ form_widget(form) }}
-        <div>
-            <input type="submit" value="{{ 'group.edit.submit'|trans }}" />
+    <div class="box">
+        <div class="box-body">
+            <form action="{{ path('glory_user_group_edit', {'id': group.getId()} ) }}" {{ form_enctype(form) }} method="POST" class="group-edit">
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-default">{{ 'group.edit.submit'|trans }}</button>
+            </form>
         </div>
-    </form>
+    </div>
 {% endblock %}

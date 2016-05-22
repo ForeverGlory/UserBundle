@@ -1,10 +1,32 @@
 {% extends "GloryUserBundle:Admin:layout.html.twig" %}
 {% block content %}
-    <div class="group-list">
-        <ul>
-            {% for group in groups %}
-                <li><a href="{{ path('glory_user_group_show', {'id': group.getId()} ) }}">{{ group.getName() }}</a></li>
+    <div class="box" id="group-list">
+        <div class="box-header">
+
+        </div>
+        <div class="box-body">
+            <table class="table">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Roles</th>
+                    <th>Operate</th>
+                </tr>
+                {% for group in groups %}
+                    <tr>
+                        <td>{{group.id}}</td>
+                        <td>{{group.name}}</td>
+                        <td>{{group.roles|join(', ') }}</td>
+                        <td>
+                            <a href="{{path('glory_user_group_edit',{id:group.id})}}">编辑</a>
+                            <a href="{{path('glory_user_group_delete',{id:group.id})}}">删除</a>
+                        </td>
+                    </tr>
                 {% endfor %}
-        </ul>
+            </table>
+        </div>
+        <div class="box-footer">
+            <a href="{{path('glory_user_group_create')}}" class="btn btn-primary">创建用户组</a>
+        </div>
     </div>
 {% endblock %}

@@ -1,15 +1,24 @@
 <?php
 
-/**
- * (c) ForeverGlory <http://foreverglory.me/>
+/*
+ * This file is part of the current project.
+ * 
+ * (c) ForeverGlory <https://foreverglory.me/>
  * 
  * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Glory\Bundle\UserBundle\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Event\GetResponseGroupEvent;
+use FOS\UserBundle\Event\FilterGroupResponseEvent;
+use FOS\UserBundle\Event\GroupEvent;
+use FOS\UserBundle\Event\FormEvent;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Description of GroupController
@@ -53,7 +62,7 @@ class GroupController extends Controller
             $groupManager->updateGroup($group);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_group_show', array('groupName' => $group->getName()));
+                $url = $this->generateUrl('glory_user_group_show', array('id' => $group->getId()));
                 $response = new RedirectResponse($url);
             }
 
@@ -70,11 +79,7 @@ class GroupController extends Controller
 
     public function showAction(Request $request, $id)
     {
-        $group = $this->getGroup($id);
-
-        return $this->render('GloryUserBundle:Admin/Group:show.html.twig', array(
-                    'group' => $group
-        ));
+        return $this->redirectToRoute('glory_user_group');
     }
 
     public function editAction(Request $request, $id)
@@ -109,7 +114,7 @@ class GroupController extends Controller
             $groupManager->updateGroup($group);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_group_show', array('groupName' => $group->getName()));
+                $url = $this->generateUrl('glory_user_group_show', array('id' => $group->getId()));
                 $response = new RedirectResponse($url);
             }
 
@@ -130,7 +135,7 @@ class GroupController extends Controller
         $group = $this->getGroup($id);
         $this->get('fos_user.group_manager')->deleteGroup($group);
 
-        $response = new RedirectResponse($this->generateUrl('fos_user_group_list'));
+        $response = new RedirectResponse($this->generateUrl('glory_user_group'));
 
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');

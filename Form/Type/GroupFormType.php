@@ -32,7 +32,7 @@ class GroupFormType extends BaseGroupFormType
         $choices = array();
         $hierarchy = $this->container->getParameter('security.role_hierarchy.roles');
         foreach ($hierarchy as $role => $hierarchy) {
-            $choices[$role] = implode(',', $hierarchy);
+            $choices[$role] = $role . ' (' . implode(',', $hierarchy) . ')';
         }
         $builder->add('roles', ChoiceType::class, array(
             'choices' => $choices,
