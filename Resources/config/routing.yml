@@ -23,6 +23,10 @@ glory_user_register_check_email:
     path: /register/check/email
     defaults: { _controller: GloryUserBundle:Register:checkEmail }
 
+glory_user_reset:
+    path: /reset
+    defaults: { _controller: GloryUserBundle:Reset:password }
+
 # profile #
 glory_user_profile:
     path: /my/profile
@@ -32,34 +36,6 @@ glory_user_password:
 glory_user_avatar:
     path: /my/avatar
     defaults: { _controller: GloryUserBundle:Profile:avatar }
-glory_user_connect:
-    path: /my/connect
-
-# oauth #
-glory_user_oauth:
-    path: /connect
-    defaults: { _controller: GloryUserBundle:OAuth:connect }
-glory_user_oauth_callback:
-    path: /connect/{service}/callback
-glory_user_oauth_redirect:
-    path: /connect/{service}
-    defaults: { _controller: GloryUserBundle:OAuth:redirectToService }
-glory_user_oauth_register:
-    path:   /connect/register/{key}
-    defaults: { _controller: GloryUserBundle:OAuth:register }
-glory_user_oauth_login:
-    path:   /connect/login/{key}
-    defaults: { _controller: GloryUserBundle:OAuth:login }
-
-hwi_oauth_connect:
-    path: /connect
-    defaults: { _controller: GloryUserBundle:OAuth:connect }
-hwi_oauth_service_redirect:
-    path:   /connect/{service}
-    defaults: { _controller: GloryUserBundle:OAuth:redirectToService }
-hwi_oauth_connect_registration:
-    path:   /connect/register/{key}
-    defaults: { _controller: GloryUserBundle:OAuth:registration }
 
 # admin security #
 glory_user_admin_login:
