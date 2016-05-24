@@ -1,17 +1,24 @@
 <?php
 
 /*
+ * This file is part of the current project.
+ * 
  * (c) ForeverGlory <http://foreverglory.me/>
  * 
  * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Glory\Bundle\UserBundle\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Glory\Bundle\UserBundle\Model\UserManager;
 use Glory\Bundle\UserBundle\Model\GroupManager;
+use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Event\GetResponseUserEvent;
+use FOS\UserBundle\Event\FormEvent;
 
 /**
  * Description of UserController
@@ -25,14 +32,14 @@ class UserController extends Controller
     {
         $query = $request->query;
         $criteria = $query->all();
-        $orderBy = $query->get('order', 'created');
+        $orderBy = ['id' => 'desc']; // $query->get('order', 'created');
         $page = $query->get('page', 1);
         $limit = $query->get('limit', 20);
         $users = $this->getUserManager()->findUsers($criteria, $orderBy, $limit, ($page - 1) * $limit);
         $groups = $this->getGroupManager()->findGroups();
         $pagination = '';
         return $this->render('GloryUserBundle:Admin/User:list.html.twig', array(
-                    'groups' => $groups,
+                    'groups' => $groups? : array(),
                     'users' => $users,
                     'pagination' => $pagination
         ));
@@ -51,7 +58,9 @@ class UserController extends Controller
         $user = $this->getUserManager()->createUser();
         $form = $this->createFormBuilder($user)
                 ->add('username', 'text')
-                ->add('password', 'password')
+                ->add('plainPassword', 'password', [
+                    'label' => 'Password'
+                ])
                 ->getForm();
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -59,8 +68,7 @@ class UserController extends Controller
             $this->getUserManager()->updateUser($user);
             return $this->redirectToRoute('glory_user_manage');
         }
-        return $this->render('GloryUserBundle:Admin/User:edit.html.twig', [
-                    'user' => $user,
+        return $this->render('GloryUserBundle:Admin/User:create.html.twig', [
                     'form' => $form->createView()
         ]);
     }
@@ -68,16 +76,38 @@ class UserController extends Controller
     public function editAction(Request $request, $id)
     {
         $user = $this->getUserManager()->findUserBy(['id' => $id]);
-        $form = $this->createFormBuilder($user)
-                ->add('username', 'text')
-                ->getForm();
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $user = $form->getData();
-            $this->getUserManager()->updateUser($user);
-            return $this->redirectToRoute('glory_user_manage_edit', ['id' => $id]);
+
+        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+        $dispatcher = $this->get('event_dispatcher');
+
+        $event = new GetResponseUserEvent($user, $request);
+        $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_INITIALIZE, $event);
+
+        if (null !== $event->getResponse()) {
+            return $event->getResponse();
         }
 
+        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
+        $formFactory = $this->get('fos_user.profile.form.factory');
+
+        $form = $formFactory->createForm();
+        $form->setData($user);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+            $userManager = $this->get('fos_user.user_manager');
+            $event = new FormEvent($form, $request);
+            $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
+            $userManager->updateUser($user);
+            if (null === $response = $event->getResponse()) {
+                $url = $this->generateUrl('fos_user_profile_show');
+                $response = new RedirectResponse($url);
+            }
+            $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+            return $response;
+        }
         return $this->render('GloryUserBundle:Admin/User:edit.html.twig', array(
                     'user' => $user,
                     'form' => $form->createView()
@@ -88,7 +118,10 @@ class UserController extends Controller
     {
         $userManager = $this->getUserManager();
         $user = $userManager->findUserBy(['id' => $id]);
-        $userManager->deleteUser($user);
+        if ($user) {
+            $userManager->deleteUser($user);
+        }
+        return $this->redirectToRoute('glory_user_manage');
     }
 
     /**
