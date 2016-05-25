@@ -1,51 +1,69 @@
 {% extends "GloryUserBundle:Admin:layout.html.twig" %}
 
 {% block content %}
-    <div class="user-list">
-        <form action="{{path('glory_user_manage')}}" method="get">
-            <label>UserName</label>
-            <input type="text" name="username" value="{{app.request.get('username')}}" />
-            <label for="group">Group</label> 
-            <select id="group" name="group">
-                {% for group in groups %}
-                    <option value="{{group.id}}"{% if app.request.get('group') == group.id %} selected="selected"{% endif %}>{{group.name}}</option>
-                {% endfor %}
-            </select>
-        </form>
-        <table>
-            <tr>
-                <th></th>
-                <th>UserName</th>
-                <th>Email</th>
-                <th>Avatar</th>
-                <th>Created</th>
-                <th>Login</th>
-                <th>Status</th>
-            </tr>
-            {% for user in users %}
+    <div class="box" id="user-list">
+        <div class="box-header">
+            <h3 class="box-title">用户列表</h3>
+            <div class="box-tools">
+                <form action="{{path('glory_user_manage')}}" method="get">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon">
+                            <select id="group" name="group">
+                                {% for group in groups %}
+                                    <option value="{{group.id}}"{% if app.request.get('group') == group.id %} selected="selected"{% endif %}>{{group.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                        <input type="text" name="username" value="{{app.request.get('username')}}" placeholder="Search" class="form-control">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="box-body">
+            <table class="table">
                 <tr>
-                    <td><input type="checkbox" name="id[]" value="{{user.id}}" /></td>
-                    <td><a href="{{path('glory_user_manage_show', {'id': user.id})}}" target="_blank">{{user.username}}</a></td>
-                    <td>{{user.email}}</td>
-                    <td>
-                        <img src="{{user.avatar}}" width="50" height="50"/>
-                    </td>
-                    <td>
-                        {{user.createdTime|date('Y-m-d H:i:s')}}
-                        {{user.createdIp}}
-                    </td>
-                    <td>
-                        {{user.loginTime}}
-                        {{user.loginIp}}
-                    </td>
-                    <td>{{user.groups|join(",")}}</td>
-                    <td>{{user.enable}}</td>
-                    <td>
-                        <a href="{{ path('glory_user_manage_edit', {'id': user.id}) }}">编辑</a>
-                        <a href="{{ path('glory_user_manage_delete', {'id': user.id}) }}">删除</a>
-                    </td>
+                    <th>#</th>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>Created</th>
+                    <th>Login</th>
+                    <th>Status</th>
+                    <th>Status</th>
+                    <th>Operate</th>
                 </tr>
-            {% endfor %}
-        </table>
+                {% for user in users %}
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td><a href="{{path('glory_user_manage_show', {'id': user.id})}}" target="_blank">{{user.username}}</a></td>
+                        <td>{{user.email}}</td>
+                        <td>
+                            {{user.createdTime|date('Y-m-d H:i:s')}}/{{user.createdIp}}
+                        </td>
+                        <td>
+                            {{user.loginTime|date('Y-m-d H:i:s')}}/{{user.loginIp}}
+                        </td>
+                        <td>{{user.groups|join(",")}}</td>
+                        <td>{{user.enable|raw}}</td>
+                        <td>
+                            <a href="{{ path('glory_user_manage_edit', {'id': user.id}) }}">编辑</a>
+                            <a href="{{ path('glory_user_manage_delete', {'id': user.id}) }}">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <a href="{{path('glory_user_manage_create')}}" class="btn btn-primary">创建用户</a>
+            <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="#">«</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">»</a></li>
+            </ul>
+        </div>
     </div>
 {% endblock %}
