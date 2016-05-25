@@ -8,3 +8,5 @@ security:
 
         register: 立即注册
         reset: 忘记密码
+form:
+    group_roles: 权限分配

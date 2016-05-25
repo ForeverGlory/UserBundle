@@ -1,0 +1,12 @@
+# Security
+security:
+    login:
+        username: Username
+        password: Password
+        remember_me: Remeber Me
+        submit: Login
+
+        register: Register Now
+        reset: Forget Password
+form:
+    group_roles: Group Rolos
