@@ -21,13 +21,16 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class RegisterFormType extends RegistrationFormType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder->remove('email');
     }
+
     public function getName()
     {
         return 'glory_user_register';
     }
+
 }
