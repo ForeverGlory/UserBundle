@@ -1,8 +1,8 @@
 UserBundle
 ===========
 
-UserBundle 基于 friendsofsymfony/user-bundle 及 hwi/oauth-bundle 进行整合用户
-重写用户登陆、注册、绑定
+UserBundle 基于 friendsofsymfony/user-bundle 进行整合管理用户
+重写用户登陆、注册、资料
 用户、用户组管理
 
 介绍
