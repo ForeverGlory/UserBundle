@@ -14,11 +14,13 @@ use Glory\Bundle\UserBundle\Model\Group as BaseGroup;
 /**
  * Group entity
  *
- * @ORM\MappedSuperclass
+ * #ORM\MappedSuperclass
+ * @ORM\Entity
+ * @ORM\Table("user_group")
  * 
  * @author ForeverGlory <foreverglory@qq.com>
  */
-abstract class AbstractGroup extends BaseGroup
+class Group extends BaseGroup
 {
 
     /**

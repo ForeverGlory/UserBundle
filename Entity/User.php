@@ -10,12 +10,13 @@ namespace Glory\Bundle\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Glory\Bundle\UserBundle\Model\User as BaseUser;
-use Glory\Bundle\UserBundle\Entity\AbstractGroup;
 
 /**
  * User entity
  * 
- * @ORM\MappedSuperclass
+ * #ORM\MappedSuperclass
+ * @ORM\Entity
+ * @ORM\Table
  * @ORM\AttributeOverrides({
  *      @ORM\AttributeOverride(name="email",
  *          column=@ORM\Column(
@@ -40,7 +41,7 @@ use Glory\Bundle\UserBundle\Entity\AbstractGroup;
  * 
  * @author ForeverGlory <foreverglory@qq.com>
  */
-abstract class AbstractUser extends BaseUser
+class User extends BaseUser
 {
 
     /**
@@ -102,7 +103,6 @@ abstract class AbstractUser extends BaseUser
     protected $updatedTime;
 
     /**
-     * @abstract 继承需要重写 targetEntity
      * @ORM\ManyToMany(targetEntity="Group")
      * @ORM\JoinTable(name="user_group_relation",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
