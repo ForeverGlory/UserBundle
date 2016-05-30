@@ -27,7 +27,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * 
  * @author ForeverGlory <foreverglory@qq.com>
  */
-class User extends FOSUser
+class User extends FOSUser implements UserInterface
 {
 
     /**
