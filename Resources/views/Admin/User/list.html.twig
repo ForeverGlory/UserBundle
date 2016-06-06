@@ -5,36 +5,23 @@
         <div class="box-header">
             <h3 class="box-title">用户列表</h3>
             <div class="box-tools">
-                <form action="{{path('glory_user_manage')}}" method="get">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-addon">
-                            <select id="group" name="group">
-                                {% for group in groups %}
-                                    <option value="{{group.id}}"{% if app.request.get('group') == group.id %} selected="selected"{% endif %}>{{group.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </span>
-                        <input type="text" name="username" value="{{app.request.get('username')}}" placeholder="Search" class="form-control">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </form>
+                {{knp_pagination_filter(pagination,{'user.username':'Username','user.email':'Email'})}}
             </div>
         </div>
         <div class="box-body">
             <table class="table">
                 <tr>
-                    <th>#</th>
-                    <th>UserName</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Id', 'user.id') }}</th>
+                    <th{% if pagination.isSorted('user.Username') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Username', 'user.username') }}</th>
                     <th>Email</th>
-                    <th>Created</th>
-                    <th>Login</th>
-                    <th>Status</th>
+                    <th{% if pagination.isSorted('user.createdTime') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Create', 'user.createdTime') }}</th>
+                    <th{% if pagination.isSorted('user.loginTime') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'login', 'user.loginTime') }}</th>
+                    <th>Group</th>
                     <th>Status</th>
                     <th>Operate</th>
                 </tr>
-                {% for user in users %}
+                {% for user in pagination %}
+                    {#{% for user in users %}#}
                     <tr>
                         <td>{{user.id}}</td>
                         <td><a href="{{path('glory_user_manage_show', {'id': user.id})}}" target="_blank">{{user.username}}</a></td>
@@ -46,7 +33,7 @@
                             {{user.loginTime|date('Y-m-d H:i:s')}}/{{user.loginIp}}
                         </td>
                         <td>{{user.groups|join(",")}}</td>
-                        <td>{{user.enable|raw}}</td>
+                        <td>{{user.enable}}</td>
                         <td>
                             <a href="{{ path('glory_user_manage_edit', {'id': user.id}) }}">编辑</a>
                             <a href="{{ path('glory_user_manage_delete', {'id': user.id}) }}">删除</a>
@@ -57,13 +44,9 @@
         </div>
         <div class="box-footer clearfix">
             <a href="{{path('glory_user_manage_create')}}" class="btn btn-primary">创建用户</a>
-            <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">«</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">»</a></li>
-            </ul>
+            <div class="no-margin pull-right">
+                {{ knp_pagination_render(pagination) }}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -30,17 +30,17 @@ class UserController extends Controller
 
     public function listAction(Request $request)
     {
-        $query = $request->query;
-        $criteria = $query->all();
-        $orderBy = ['id' => 'desc']; // $query->get('order', 'created');
-        $page = $query->get('page', 1);
-        $limit = $query->get('limit', 20);
-        $users = $this->getUserManager()->findUsers($criteria, $orderBy, $limit, ($page - 1) * $limit);
-        $groups = $this->getGroupManager()->findGroups();
-        $pagination = '';
+        $em = $this->getDoctrine()->getManager();
+        $sql = 'select user from ' . $this->getUserManager()->getClass() . ' user';
+        $query = $em->createQuery($sql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $query, $request->query->getInt('page', 1), 20
+        );
+        
         return $this->render('GloryUserBundle:Admin/User:list.html.twig', array(
-                    'groups' => $groups? : array(),
-                    'users' => $users,
+                    'groups' => array(),
                     'pagination' => $pagination
         ));
     }
