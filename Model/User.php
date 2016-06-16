@@ -253,5 +253,16 @@ class User extends FOSUser implements UserInterface
             return call_user_method_array($method, $profile, $arguments);
         }
     }
+    
+    public function getRoles()
+    {
+        $roles = parent::getRoles();
+        foreach($roles as $key => $role){
+            if(is_string($role)){
+                $roles[$key] = new \Glory\Bundle\UserBundle\Security\Role\Role($role);
+            }
+        }
+        return $roles;
+    }
 
 }
