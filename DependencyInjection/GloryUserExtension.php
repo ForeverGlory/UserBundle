@@ -14,6 +14,7 @@ namespace Glory\Bundle\UserBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
@@ -22,8 +23,18 @@ use Symfony\Component\DependencyInjection\Loader;
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  * @author ForeverGlory <foreverglory@qq.com>
  */
-class GloryUserExtension extends Extension
+class GloryUserExtension extends Extension implements PrependExtensionInterface
 {
+
+    public function prepend(ContainerBuilder $container)
+    {
+        $container->prependExtensionConfig('fos_user', [
+            'user_class' => 'Glory\Bundle\UserBundle\Entity\User',
+            'group' => [
+                'group_class' => 'Glory\Bundle\UserBundle\Entity\Group'
+            ]
+        ]);
+    }
 
     /**
      * {@inheritdoc}
