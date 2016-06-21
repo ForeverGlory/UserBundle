@@ -34,6 +34,13 @@ class GloryUserExtension extends Extension implements PrependExtensionInterface
                 'group_class' => 'Glory\Bundle\UserBundle\Entity\Group'
             ]
         ]);
+//        $container->prependExtensionConfig('doctrine', [
+//            'orm' => [
+//                'mappings' => [
+//                    'GloryUserBundle' => false
+//                ]
+//            ]
+//        ]);
     }
 
     /**
@@ -48,6 +55,10 @@ class GloryUserExtension extends Extension implements PrependExtensionInterface
         $loader->load('services.yml');
         $loader->load('register.yml');
         $loader->load('group.yml');
+
+//        if ($container->getParameter('fos_user.model.user.class') == 'Glory\\Bundle\\UserBundle\\Entity\\User' && $container->getParameter('fos_user.model.group.class') == 'Glory\\Bundle\\UserBundle\\Entity\\Group') {
+//        $container->setParameter('glory_user.doctrine_mapping', false);
+//        }
     }
 
 }

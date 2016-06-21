@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Glory\Bundle\UserBundle\DependencyInjection\Compiler\RegisterPass;
 use Glory\Bundle\UserBundle\DependencyInjection\Compiler\GroupPass;
+//use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 
 /**
  * build
@@ -29,6 +30,10 @@ class GloryUserBundle extends Bundle
         parent::build($container);
         $container->addCompilerPass(new RegisterPass());
         $container->addCompilerPass(new GroupPass());
+
+//        $container->addCompilerPass(DoctrineOrmMappingsPass::createPhpMappingDriver([
+//                    realpath(__DIR__ . '/Entity') => 'Glory\Bundle\UserBundle\Entity'
+//                        ], array('glory_user.model_manager_name'), 'glory_user.doctrine_mapping'));
     }
 
 }
