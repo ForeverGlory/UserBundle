@@ -32,7 +32,7 @@
                         <td>
                             {{user.loginTime|date('Y-m-d H:i:s')}}/{{user.loginIp}}
                         </td>
-                        <td>{{user.groups|join(",")}}</td>
+                        <td>{{user.groupNames|join(",")}}</td>
                         <td>{{user.enable}}</td>
                         <td>
                             <a href="{{ path('glory_user_manage_edit', {'id': user.id}) }}">编辑</a>
