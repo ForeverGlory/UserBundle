@@ -19,6 +19,8 @@ use Glory\Bundle\UserBundle\Model\GroupManager;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Event\FormEvent;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * Description of UserController
@@ -38,7 +40,7 @@ class UserController extends Controller
         $pagination = $paginator->paginate(
                 $query, $request->query->getInt('page', 1), 20
         );
-        
+
         return $this->render('GloryUserBundle:Admin/User:list.html.twig', array(
                     'groups' => array(),
                     'pagination' => $pagination
@@ -88,10 +90,23 @@ class UserController extends Controller
         }
 
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->get('fos_user.profile.form.factory');
+        //Todo: 可以在此处加用户资料
+        //$formFactory = $this->get('fos_user.profile.form.factory');
 
-        $form = $formFactory->createForm();
-        $form->setData($user);
+        $form = $this->createFormBuilder($user)
+                ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
+                ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle', 'required' => false))
+                ->add('plainPassword', 'password', [
+                    'label' => 'Password',
+                    'required' => false
+                ])
+                ->add('groups', EntityType::class, array(
+                    'class' => $this->getParameter('fos_user.model.group.class'),
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
+                ))
+                ->getForm();
 
         $form->handleRequest($request);
 
@@ -101,10 +116,10 @@ class UserController extends Controller
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
             $userManager->updateUser($user);
-            if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_profile_show');
-                $response = new RedirectResponse($url);
-            }
+
+            $url = $this->generateUrl('glory_user_manage');
+            $response = new RedirectResponse($url);
+
             $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
             return $response;
         }
