@@ -45,7 +45,8 @@ class UserExtension extends \Twig_Extension
             $user = $token->getUser();
         }
         if ($user && $field) {
-            return $user->$field;
+            $method = 'get'.ucfirst($field);
+            return $user->$method();
         }
         return $user;
     }
