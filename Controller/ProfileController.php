@@ -8,14 +8,13 @@
 
 namespace Glory\Bundle\UserBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
-use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * Description of Password
@@ -24,6 +23,44 @@ use FOS\UserBundle\Model\UserInterface;
  */
 class ProfileController extends Controller
 {
+
+    public function indexAction(Request $request)
+    {
+        $user = $this->getUserOrThrowException();
+        return $this->render('GloryUserBundle:Profile:index.html.twig', array(
+                    'user' => $user
+        ));
+    }
+
+    public function editAction(Request $request, $field = null)
+    {
+        $user = $this->getUserOrThrowException();
+        //$form = $this->createForm('glory_user_profile_form', $user);
+        $formBuilder = $this->createFormBuilder($user);
+        if ($field) {
+            switch ($field) {
+                case 'username':
+                    $formBuilder->add('username', 'text');
+                    break;
+                case 'profile':
+                    break;
+            }
+        }
+        $formBuilder->add('submit', 'submit');
+        $form = $formBuilder->getForm();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $userManager = $this->get('glory_user.user_manager');
+            $userManager->updateUser($user);
+
+            $this->addFlash('success', printf('Profile updated.'));
+            return $this->redirectToRoute('glory_user_profile');
+        }
+        return $this->render('GloryUserBundle:Profile:edit.html.twig', array(
+                    'user' => $user,
+                    'form' => $form->createView()
+        ));
+    }
 
     /**
      * 修改密码 
@@ -58,6 +95,7 @@ class ProfileController extends Controller
             $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_SUCCESS, $event);
 
             $userManager->updateUser($user);
+            $this->addFlash('success', printf('Password changed.'));
 
             if (null === $response = $event->getResponse()) {
                 $url = $this->generateUrl('glory_user_password');
@@ -77,35 +115,26 @@ class ProfileController extends Controller
     public function avatarAction(Request $request)
     {
         $user = $this->getUserOrThrowException();
-        $form = $this->createForm('form', $user)
-                ->add('avatar', 'text');
+        $form = $this->createFormBuilder($user)
+                ->add('avatar', FileType::class, array('label' => '上传头像', 'data_class' => null))
+                ->getForm();
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $file = $user->getAvatar();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move(
+                    $this->getParameter('avatar_directory'), $fileName
+            );
+            $user->setAvatar('/uploads/' . $fileName);
+
             $manager = $this->get('fos_user.user_manager');
             $manager->updateUser($user);
 
-            $url = $this->generateUrl('glory_user_avatar');
-            $response = new RedirectResponse($url);
-
-            return $response;
+            return $this->redirectToRoute('glory_user_profile');
         }
         return $this->render('GloryUserBundle:Profile:avatar.html.twig', array(
                     'form' => $form->createView()
         ));
-    }
-
-    public function infoAction(Request $request)
-    {
-        
-    }
-
-    protected function getUserOrThrowException()
-    {
-        $user = $this->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
-            throw $this->createAccessDeniedException('This user does not have access to this section.');
-        }
-        return $user;
     }
 
 }
