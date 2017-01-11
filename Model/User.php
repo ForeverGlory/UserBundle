@@ -47,12 +47,14 @@ class User extends FOSUser implements UserInterface
      */
     protected $plainPassword;
     protected $avatar;
-    protected $loginTime;
-    protected $loginIp;
+    protected $description;
     protected $createdTime;
     protected $createdIp;
     protected $createdSource;
-    protected $updateTime;
+    protected $loginTime;
+    protected $loginIp;
+    protected $loginSource;
+    protected $updatedTime;
     protected $profile;
 
     /**
@@ -76,7 +78,18 @@ class User extends FOSUser implements UserInterface
      */
     public function getAvatar()
     {
-        return $this->avatar? : '/bundles/gloryuser/images/avatar.jpg';
+        return $this->avatar;//? : '/bundles/gloryuser/images/avatar.jpg';
+    }
+    
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -125,6 +138,17 @@ class User extends FOSUser implements UserInterface
     public function getLoginIp()
     {
         return $this->loginIp;
+    }
+
+    public function setLoginSource($loginSource)
+    {
+        $this->loginSource = $loginSource;
+        return $this;
+    }
+
+    public function getLoginSource()
+    {
+        return $this->loginSource;
     }
 
     /**
@@ -252,17 +276,6 @@ class User extends FOSUser implements UserInterface
         if ($profile && method_exists($profile, $method)) {
             return call_user_method_array($method, $profile, $arguments);
         }
-    }
-    
-    public function getRoles()
-    {
-        $roles = parent::getRoles();
-        foreach($roles as $key => $role){
-            if(is_string($role)){
-                $roles[$key] = new \Glory\Bundle\UserBundle\Security\Role\Role($role);
-            }
-        }
-        return $roles;
     }
 
 }

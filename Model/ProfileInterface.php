@@ -12,22 +12,10 @@
 namespace Glory\Bundle\UserBundle\Model;
 
 /**
- * Description of Profile
  *
  * @author ForeverGlory <foreverglory@qq.com>
  */
-class Profile implements ProfileInterface
+interface ProfileInterface
 {
-
-    public function __set($name, $value)
-    {
-        $this->$name = $value;
-        return $this;
-    }
-
-    public function __get($name)
-    {
-        return $this->$name;
-    }
-
+    
 }

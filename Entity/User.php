@@ -14,9 +14,8 @@ use Glory\Bundle\UserBundle\Model\User as BaseUser;
 /**
  * User entity
  * 
- * #ORM\MappedSuperclass
  * @ORM\Entity
- * @ORM\Table
+ * @ORM\Table("user")
  * @ORM\AttributeOverrides({
  *      @ORM\AttributeOverride(name="email",
  *          column=@ORM\Column(
@@ -59,20 +58,13 @@ class User extends BaseUser
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
      */
     protected $avatar;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="login_time", type="integer", nullable=true)
-     */
-    protected $loginTime;
-
+    
     /**
      * @var string
      *
-     * @ORM\Column(name="login_ip", type="string", length=64, nullable=true)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
-    protected $loginIp;
+    protected $description;
 
     /**
      * @var integer
@@ -96,11 +88,39 @@ class User extends BaseUser
     protected $createdSource;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="login_time", type="integer", nullable=true)
+     */
+    protected $loginTime;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="login_ip", type="string", length=64, nullable=true)
+     */
+    protected $loginIp;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="login_source", type="string", length=64, nullable=true)
+     */
+    protected $loginSource;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="updated_time", type="integer", nullable=true)
      */
     protected $updatedTime;
+
+    /**
+     * @var Profile
+     * 
+     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user")
+     */
+    protected $profile;
 
     /**
      * @ORM\ManyToMany(targetEntity="Group")
@@ -114,7 +134,6 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        //more code
     }
 
 }
