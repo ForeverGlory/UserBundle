@@ -1,10 +1,17 @@
 {% extends "GloryUserBundle::layout.html.twig" %}
 
 {% block content %}
-    <form action="{{ path('glory_user_avatar') }}" {{ form_enctype(form) }} method="POST">
-        {{ form_widget(form) }}
-        <div>
-            <input type="submit" value="{{ 'change_avatar.submit'|trans }}" />
-        </div>
-    </form>
+    <div class="container">
+        <form action="{{ path('glory_user_profile_avatar') }}" {{ form_enctype(form) }} method="POST">
+            {% if form.avatar.vars.data is not empty %}
+                <div class="thumbnail">
+                    <img src="{{form.avatar.vars.data}}"/>
+                </div>
+            {% endif %}
+            {{ form_widget(form) }}
+            <div>
+                <input type="submit"  value="保存" class="btn btn-default btn-block" />
+            </div>
+        </form>
+    </div>
 {% endblock content %}
