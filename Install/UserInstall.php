@@ -33,6 +33,7 @@ class UserInstall extends ContainerAwareMission
         $userManager = $this->getUserManager();
         $user = $userManager->createUser();
         $user->setUsername('admin');
+        $user->setEmail('admin@foreverglory.me');
         $user->setPlainPassword('letmein');
         $user->setEnabled(true);
         $user->setSuperAdmin(true);
