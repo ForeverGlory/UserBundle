@@ -1,3 +1,5 @@
+parameters:
+    avatar_directory: "%kernel.root_dir%/../web/uploads/"
 services:
     glory_user.listener.registration:
         class: Glory\Bundle\UserBundle\EventListener\RegistrationListener
@@ -44,3 +46,8 @@ services:
         arguments: [@service_container]
         tags:
             - { name: twig.extension }
+    
+    glory_user.event.doctrine_listener:
+        class: Glory\Bundle\UserBundle\EventListener\DoctrineListener
+        tags:
+            - { name: doctrine.event_subscriber }

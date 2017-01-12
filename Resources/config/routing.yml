@@ -16,6 +16,9 @@ glory_user_logout:
 glory_user_register:
     path: /register
     defaults: { _controller: GloryUserBundle:Register:register }
+glory_user_register_success:
+    path: /register/success
+    defaults: { _controller: GloryUserBundle:Register:success }
 fos_user_registration_confirmed:
     path: /register/success
     defaults: { _controller: GloryUserBundle:Register:confirmed }
@@ -28,13 +31,29 @@ glory_user_reset:
     defaults: { _controller: GloryUserBundle:Reset:password }
 
 # profile #
+glory_user_my:
+    path: /my
+    defaults: { _controller: GloryUserBundle:My:index }
 glory_user_profile:
     path: /my/profile
+    defaults: { _controller: GloryUserBundle:Profile:index }
+glory_user_profile_edit:
+    path: /my/profile/edit
+    defaults: { _controller: GloryUserBundle:Profile:edit }
+glory_user_profile_username:
+    path: /my/profile/username
+    defaults: 
+        _controller: GloryUserBundle:Profile:edit
+        field: username
+
 glory_user_password:
-    path: /my/password
+    path: /my/profile/password
     defaults: { _controller: GloryUserBundle:Profile:password }
-glory_user_avatar:
-    path: /my/avatar
+glory_user_profile_password:
+    path: /my/profile/password
+    defaults: { _controller: GloryUserBundle:Profile:password }
+glory_user_profile_avatar:
+    path: /my/profile/avatar
     defaults: { _controller: GloryUserBundle:Profile:avatar }
 
 # admin security #
