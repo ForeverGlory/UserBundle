@@ -44,10 +44,8 @@ fos_user:
     group:
         group_class: Glory\Bundle\UserBundle\Entity\Group
     # 更多配置，参考 `friendsofsymfony/user-bundle`
-
 glory_user:
     # 未实现
-
 ```
 
 ```yaml
@@ -62,12 +60,10 @@ glory_user:
 #app/config/security.yml
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: sha256
-
+        Glory\Bundle\UserBundle\Model\UserInterface: sha256
     providers:
         fos_user:
             id: fos_user.user_provider.username
-
     firewalls:
         # fos_user.firewall_name, hwi_oauth.firewall_name 对应值
         main:
@@ -91,9 +87,9 @@ security:
             anonymous:    true
 ```
 ### Code
-extends Glory\Bundle\UserBundle\Entity\AbstractUser
+extends Glory\Bundle\UserBundle\Entity\User
 
-extends Glory\Bundle\UserBundle\Entity\AbstractGroup
+extends Glory\Bundle\UserBundle\Entity\Group
 
 More
 ------------
